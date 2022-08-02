@@ -15,13 +15,16 @@ isThisWorking = "Yes"
 --
 
 lastDigit :: Integer -> Integer
-lastDigit = error "lastDigit not yet defined"
+lastDigit x = x `mod` 10
 
 dropLastDigit :: Integer -> Integer
-dropLastDigit = error "dropLastDigit not yet defined"
+dropLastDigit x = (x - lastDigit x) `div` 10
 
 toDigits :: Integer -> [Integer]
-toDigits = error "toDigits not yet defined"
+toDigits x = 
+    if x <= 0 
+    then []
+    else toDigits (dropLastDigit x) ++ [lastDigit x]
 
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther = error "doubleEveryOther not yet defined"

@@ -26,30 +26,52 @@ toDigits x =
     then []
     else toDigits (dropLastDigit x) ++ [lastDigit x]
 
+doubleEveryOtherReverse :: [Integer] -> Integer -> [Integer]
+doubleEveryOtherReverse [] shouldDouble = []
+doubleEveryOtherReverse x shouldDouble =
+    if shouldDouble == 1
+    then head x * 2 : doubleEveryOtherReverse (tail x) 0
+    else head x : doubleEveryOtherReverse (tail x) 1
+
+
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther = error "doubleEveryOther not yet defined"
+doubleEveryOther x = reverse (doubleEveryOtherReverse (reverse x) 0)
 
 sumDigits :: [Integer] -> Integer
-sumDigits = error "sumDigits not yet defined"
+sumDigits [] = 0
+sumDigits x = 
+    if head x >= 10
+    then sumDigits (toDigits (head x)) + sumDigits (tail x)
+    else head x + sumDigits (tail x)
 
 validate :: Integer -> Bool
-validate = error "validate not yet defined"
+validate x = sumDigits (doubleEveryOther (toDigits x)) `mod` 10 == 0
 
 --
 -- Problem 2
 --
 
+square :: Int -> Int
+square x = x * x
+
 pow :: (a -> a) -> Int -> a -> a
-pow = error "pow not yet defined"
+pow f n =
+    if n == 0
+    then f
+    else f . pow f (n - 1)
 
 g :: Integer -> Integer
-g = error "g not yet defined"
+g 0 = 0
+g x = x - pow g 1 (x - 1)
 
 h :: Integer -> Integer
-h = error "h not yet defined"
+h 0 = 0
+h x = x - pow h 2 (x - 1)
 
 d :: Int -> Integer -> Integer
-d = error "d not yet defined"
+d i 0 = 0
+d i x = x - (pow d i) i h
+
 
 --
 -- Problem 3

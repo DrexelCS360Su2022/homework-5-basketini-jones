@@ -55,22 +55,23 @@ square :: Int -> Int
 square x = x * x
 
 pow :: (a -> a) -> Int -> a -> a
+pow f 0 = id
 pow f n =
-    if n == 0
+    if n == 1
     then f
     else f . pow f (n - 1)
 
 g :: Integer -> Integer
 g 0 = 0
-g x = x - pow g 1 (x - 1)
+g x = x - pow g 2 (x - 1)
 
 h :: Integer -> Integer
 h 0 = 0
-h x = x - pow h 2 (x - 1)
+h x = x - pow h 3 (x - 1)
 
 d :: Int -> Integer -> Integer
 d i 0 = 0
-d i x = x - (pow d i) i h
+d i x = x - pow (d i) i (x - 1)
 
 
 --

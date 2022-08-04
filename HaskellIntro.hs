@@ -78,4 +78,10 @@ d i x = x - pow (d i) i (x - 1)
 -- Problem 3
 --
 
-powerSet = error "powerSet not yet defined"
+powerSet :: (Ord a) => Set a -> Set (Set a)
+powerSet xs =
+    if isEmpty xs
+    then singleton empty
+    else mapSet (insert (fst (split xs))) (powerSet (snd (split xs)))
+         `union` 
+         powerSet (snd (split xs))
